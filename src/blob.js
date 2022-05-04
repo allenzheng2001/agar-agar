@@ -3,32 +3,69 @@
 // http://patreon.com/codingtrain
 // Code for: https://youtu.be/JXuxYMGe4KI
 
-function Blob(x, y, r) {
-  this.pos = createVector(x, y);
-  this.r = r;
-  this.vel = createVector(0, 0);
 
-  this.update = function() {
-    var newvel = createVector(mouseX - width / 2, mouseY - height / 2);
-    newvel.setMag(3);
-    this.vel.lerp(newvel, 0.2);
-    this.pos.add(this.vel);
-  };
+class Blob {
+  constructor(x, y, r) 
+  {
+    this.position = createVector(x,y);
+    this.radius = r;
+    this.velocity = createVector(0,0);
 
-  this.eats = function(other) {
-    var d = p5.Vector.dist(this.pos, other.pos);
-    if (d < this.r + other.r) {
-      var sum = PI * this.r * this.r + PI * other.r * other.r;
-      this.r = sqrt(sum / PI);
-      //this.r += other.r;
+    this.color = 'rgb(255, 255, 255)';
+  }
+
+  update()
+  {
+    var mouse_vel = createVector(mouseX - width/2, mouseY - height/2);
+    mouse_vel.normalize();
+    mouse_vel.setMag(3);
+    this.velocity.lerp(mouse_vel, .2);
+    this.position.add(this.velocity);
+  }
+
+  eats(other)
+  {
+    var distance = p5.Vector.dist(this.position, other.position);
+    if(this.radius + other.radius > distance)
+    {
+      this.radius = sqrt(this.radius * this.radius + other.radius * other.radius);
       return true;
-    } else {
+    }
+    else
+    {
       return false;
     }
-  };
+  }
 
-  this.show = function() {
-    fill(255);
-    ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
-  };
+  show()
+  {
+    fill(this.color);
+    ellipse(this.position.x, this.position.y, 2*this.radius, 2*this.radius);
+  }
+}
+
+class PlayerBlob extends Blob
+{
+  constructor(x, y, r)
+  {
+    super(x,y,r);
+    this.color = 'rgb(0, 0, 255)';
+  }
+}
+
+class FoodBlob extends Blob
+{
+  constructor(x, y)
+  {
+    super(x, y, random(10, 22));
+    this.r = random(0, 255);
+    this.g = random(0, 255);
+    this.b = random(0, 255);
+  }
+
+  show()
+  {
+    fill(this.r, this.g, this.b, 200);
+    ellipse(this.position.x, this.position.y, 2*this.radius, 2*this.radius);
+  }
 }
