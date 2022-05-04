@@ -14,15 +14,6 @@ class Blob {
     this.color = 'rgb(255, 255, 255)';
   }
 
-  update()
-  {
-    var mouse_vel = createVector(mouseX - width/2, mouseY - height/2);
-    mouse_vel.normalize();
-    mouse_vel.setMag(3);
-    this.velocity.lerp(mouse_vel, .2);
-    this.position.add(this.velocity);
-  }
-
   eats(other)
   {
     var distance = p5.Vector.dist(this.position, other.position);
@@ -50,6 +41,21 @@ class PlayerBlob extends Blob
   {
     super(x,y,r);
     this.color = 'rgb(0, 0, 255)';
+  }
+
+  update()
+  {
+    var mouse_vel = createVector(mouseX - width/2, mouseY - height/2);
+    mouse_vel.normalize();
+    mouse_vel.setMag(1 + 128/this.radius);
+    this.velocity.lerp(mouse_vel, .2);
+    this.position.add(this.velocity);
+  }
+
+  show()
+  {
+    super.show();
+    console.log("Curr Radius: " + this.radius);
   }
 }
 
