@@ -11,7 +11,8 @@ Current implementation:
 
 TODO (subject to change):
 - generate and expand map "frames" instead of auto-expanding rectangle
-- port over food spawning: auto-generate foods? (test2)
+- port over food spawning: auto-generate foods ? (test2)
+- spawn one food elsewhere per one that gets eaten
 - binary fission, then converge (test3)
 - add NPCs? (test4)
 - add course hazards (auto-generating?)
