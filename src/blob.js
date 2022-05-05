@@ -22,10 +22,7 @@ class Blob {
       this.radius = sqrt(this.radius * this.radius + other.radius * other.radius);
       return true;
     }
-    else
-    {
-      return false;
-    }
+    return false;
   }
 
   show()
@@ -55,7 +52,6 @@ class PlayerBlob extends Blob
   show()
   {
     super.show();
-    console.log("Curr Radius: " + this.radius);
   }
 }
 
