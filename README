@@ -1,2 +1,30 @@
-Hello World!
+Current implementation:
+(test1)
+- player follows mouse
+- food particles can be eaten
+- smooth lerp to grow size 
+- colors
+
+- expanding window size
+- pause functionality (press s)
+- auto-generation skeleton code
+
+TODO (subject to change):
+- port over food spawning: auto-generate foods? (test2)
+- binary fission, then converge (test3)
+- add NPCs? (test4)
+- add course hazards (auto-generating?)
+    - breaker
+    - mirror
+    - black hole / E&M field (changes velocity O_O)
+    - negative foods?
+- add biomes (refactory)?
+- QoL: increase speed, safe mode. both decrease radius
+
+FUTURE DIRECTIONS (after turn in)
+- networking for multiplayer
+- 3D?
+
+
+
 

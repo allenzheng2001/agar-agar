@@ -38,15 +38,27 @@ class PlayerBlob extends Blob
   {
     super(x,y,r);
     this.color = 'rgb(0, 0, 255)';
+    this.stopped = false;
+  }
+  
+  pause()
+  {
+    this.stopped = !(this.stopped);
   }
 
-  update()
+  move()
   {
     var mouse_vel = createVector(mouseX - width/2, mouseY - height/2);
     mouse_vel.normalize();
     mouse_vel.setMag(1 + 128/this.radius);
     this.velocity.lerp(mouse_vel, .2);
     this.position.add(this.velocity);
+  }
+
+  update()
+  {
+    if(!this.stopped)
+      this.move();
   }
 
   show()

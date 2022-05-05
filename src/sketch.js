@@ -22,6 +22,13 @@ function setup() {
   }
 }
 
+function keyPressed()
+{
+  if(key == 's')
+    me.pause();
+}
+
+
 function draw() {
   background(0);
 
@@ -41,5 +48,4 @@ function draw() {
   me.show();
   me.update();
   world.update(me);
-  world.print();
 }
