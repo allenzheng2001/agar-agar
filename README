@@ -10,6 +10,7 @@ Current implementation:
 - auto-generation skeleton code
 
 TODO (subject to change):
+- generate and expand map "frames" instead of auto-expanding rectangle
 - port over food spawning: auto-generate foods? (test2)
 - binary fission, then converge (test3)
 - add NPCs? (test4)
