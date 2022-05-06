@@ -21,7 +21,12 @@ class Window
 
     spawnFood()
     {
+        let all_sets = [...this.grid.values()];
+        let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
+        let frames =  [...rand_set.values()];
+        let rand_frame = frames[Math.floor(random(0, frames.length))];
 
+        rand_frame.spawnFood();
     }
 
     generate(xMin, xMax, yMin, yMax)
@@ -73,6 +78,27 @@ class Window
         this.extend(cur_pos.x - w/2, cur_pos.y + h/2);
         this.extend(cur_pos.x + w/2, cur_pos.y - h/2);
         this.extend(cur_pos.x + w/2, cur_pos.y + h/2);
+
+        //check for changes in the window
+        let min_x = Frame.convert(cur_pos.x - w/2);
+        let max_x = Frame.convert(cur_pos.x + w/2);
+        let min_y = Frame.convert(cur_pos.y - h/2);
+        let max_y = Frame.convert(cur_pos.y + h/2);
+
+        for(var i = min_x; i <= max_x; i++)
+        {
+            for(var j = min_y; j <= max_y; j++)
+            {
+                if(!(this.grid.has(i) && this.grid.get(i).has(j)))
+                {
+                    if(!this.grid.has(i))
+                        this.grid.set(i, new Map());
+                    this.grid.get(i).set(j, new Frame(i, j, true));
+                }
+                
+                this.grid.get(i).get(j).checkFood(this);
+            }
+        }
         
     }
 
@@ -152,18 +178,30 @@ class Frame
         this.edge = false;
     }
 
+    spawnFood()
+    {
+        this.food.push(new FoodBlob(random(this.minX, this.minX + init_dim), random(this.minY, this.minY + init_dim)));
+    }
+
+    checkFood(world)
+    {
+        for (var i = this.food.length - 1; i >= 0; i--) {
+            if (me.eats(this.food[i])) {
+                this.food.splice(i, 1);
+                world.spawnFood();
+            }
+        }
+    }
+
     show()
     {
         for (var i = this.food.length - 1; i >= 0; i--) {
             this.food[i].show();
-            if (me.eats(this.food[i])) {
-              this.food.splice(i, 1);
-            }
         }
     }
 
     print()
     {
-        console.log("Frame");
+        console.log("Frame: left corner (" + this.minX + ",  " + this.minY + ")");
     }
 }

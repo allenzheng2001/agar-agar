@@ -5,14 +5,17 @@ Current implementation:
 - smooth lerp to grow size 
 - colors
 
+(test2)
 - expanding window size
 - pause functionality (press s)
 - auto-generation skeleton code
 - generate and expand map "frames" instead of auto-expanding rectangle
-- port over food spawning: auto-generate foods ? (test2)
+- port over food spawning: auto-generate foods ?
+- spawn one food elsewhere in the world per one that gets eaten
+- speed up and shrink (press f)
+
 
 TODO (subject to change):
-- spawn one food elsewhere per one that gets eaten
 - binary fission, then converge (test3)
 - add NPCs? (test4)
 - add course hazards (auto-generating?)
