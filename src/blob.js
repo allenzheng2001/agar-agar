@@ -1,8 +1,5 @@
 // Daniel Shiffman
-// http://codingtra.in
-// http://patreon.com/codingtrain
 // Code for: https://youtu.be/JXuxYMGe4KI
-
 
 class Blob {
   constructor(x, y, r) 
@@ -39,6 +36,7 @@ class PlayerBlob extends Blob
     super(x,y,r);
     this.color = 'rgb(0, 0, 255)';
     this.stopped = false;
+    this.fast = false;
   }
   
   pause()
@@ -46,12 +44,28 @@ class PlayerBlob extends Blob
     this.stopped = !(this.stopped);
   }
 
+  fast_on()
+  {
+    this.fast = (this.radius > init_r);
+  }
+
+  fast_off()
+  {
+    this.fast = false;
+  }
+
   move()
   {
     var mouse_vel = createVector(mouseX - width/2, mouseY - height/2);
     mouse_vel.normalize();
-    mouse_vel.setMag(1 + 128/this.radius);
-    this.velocity.lerp(mouse_vel, .2);
+
+    let fair_speed = 1 + 128/this.radius
+
+    if(this.fast)
+      mouse_vel.setMag(2*fair_speed)
+    else
+      mouse_vel.setMag(fair_speed);
+    this.velocity.lerp(mouse_vel, .1);
     this.position.add(this.velocity);
   }
 
@@ -59,6 +73,15 @@ class PlayerBlob extends Blob
   {
     if(!this.stopped)
       this.move();
+    if(this.fast)
+    {
+      this.color = 'rgba(0, 0, 255, .5)';
+      this.radius = (this.radius < init_r + fast_shrink_r) ? init_r: this.radius - fast_shrink_r;
+      if(this.radius == init_r)
+        this.fast = false;
+    }
+    else
+      this.color = 'rgb(0, 0, 255)';
   }
 
   show()

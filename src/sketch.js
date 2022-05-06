@@ -5,27 +5,42 @@
 
 var me; // player
 var world; //scope of the current world
+
 var init_dim = 600;
 var init_r = 50;
 
-var food = [];
+var density = 50; //food per frame
+var fast_shrink_r = .01;
+
 var zoom = 1;
+
+var paused = false;
 
 function setup() {
   createCanvas(init_dim, init_dim);
-  world = new Window(init_dim);
+  world = new Window();
   me = new PlayerBlob(0, 0, init_r);
-  for (var i = 0; i < 200; i++) {
-    var x = random(-width, width);
-    var y = random(-height, height);
-    food[i] = new FoodBlob(x, y);
-  }
 }
 
 function keyPressed()
 {
-  if(key == 's')
-    me.pause();
+  if(key == 'p')
+  {
+    paused = !paused;
+    //world.print();
+  }
+  else if (key == 'f')
+  {
+    me.fast_on();
+  }
+}
+
+function keyReleased()
+{
+  if(key == 'f')
+  {
+    me.fast_off();
+  }
 }
 
 
@@ -38,14 +53,12 @@ function draw() {
   scale(zoom);
   translate(-me.position.x, -me.position.y);
 
-  for (var i = food.length - 1; i >= 0; i--) {
-    food[i].show();
-    if (me.eats(food[i])) {
-      food.splice(i, 1);
-    }
-  }
-
   me.show();
-  me.update();
-  world.update(me);
+  world.show(me, zoom);
+
+  if(!paused)
+  {
+    me.update();
+    world.update(me, zoom);
+  }
 }

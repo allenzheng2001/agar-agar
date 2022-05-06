@@ -8,10 +8,10 @@ Current implementation:
 - expanding window size
 - pause functionality (press s)
 - auto-generation skeleton code
-
-TODO (subject to change):
 - generate and expand map "frames" instead of auto-expanding rectangle
 - port over food spawning: auto-generate foods ? (test2)
+
+TODO (subject to change):
 - spawn one food elsewhere per one that gets eaten
 - binary fission, then converge (test3)
 - add NPCs? (test4)
@@ -21,7 +21,7 @@ TODO (subject to change):
     - black hole / E&M field (changes velocity O_O)
     - negative foods?
 - add biomes (refactory)?
-- QoL: increase speed, safe mode. both decrease radius
+- QoL: increase speed (done), safe mode. both decrease radius
 
 FUTURE DIRECTIONS (after turn in)
 - networking for multiplayer

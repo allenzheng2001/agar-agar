@@ -1,7 +1,5 @@
-// Daniel Shiffman
-// http://codingtra.in
-// http://patreon.com/codingtrain
-// Code for: https://youtu.be/JXuxYMGe4KI
+// Starter Code Credit to: Daniel Shiffman, p5.js libraries
+// Code following: https://youtu.be/JXuxYMGe4KI
 
 var me; // player
 
@@ -10,22 +8,20 @@ var zoom = 1;
 
 function setup() {
   createCanvas(600, 600);
-  me = new PlayerBlob(0, 0, 64);
-  for (var i = 0; i < 200; i++) {
-    var x = random(-width, width);
-    var y = random(-height, height);
-    food[i] = new FoodBlob(x, y);
+  me = new PlayerBlob(0, 0, 50);
+  for (var i = 0; i < 150; i++) {
+    food.push(new FoodBlob(random(-600, 600), random(-600, 600)));
   }
 }
 
 function draw() {
   background(0);
 
-  translate(width / 2, height / 2);
+  translate(300,300);
   var newzoom = 64 / me.radius;
   zoom = lerp(zoom, newzoom, 0.1);
   scale(zoom);
-  translate(-me.position.x, -me.position.y);
+  translate(-1*me.position.x, -1*me.position.y);
 
   for (var i = food.length - 1; i >= 0; i--) {
     food[i].show();
