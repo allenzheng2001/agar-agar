@@ -7,7 +7,7 @@ Current implementation:
 
 (test2)
 - expanding window size
-- pause functionality (press s)
+- pause functionality (press p)
 - auto-generation skeleton code
 - generate and expand map "frames" instead of auto-expanding rectangle
 - port over food spawning: auto-generate foods ?
