@@ -19,14 +19,6 @@ class Window
         }
     }
 
-    static mouse_convert(position)
-    {
-        let scale = 1.0/zoom;
-        let mouse_world = createVector((mouseX - width/2)*scale, (mouseY - height/2)*scale);
-        mouse_world.add(me.center_of_mass);
-        return p5.Vector.sub(mouse_world, position);
-    }
-
     spawnFood()
     {
         let all_sets = [...this.grid.values()];
@@ -78,7 +70,7 @@ class Window
     update(cur_pov, zoom)
     {
         //check if our viewport needs to be extended
-        let cur_pos = cur_pov.center_of_mass;
+        let cur_pos = cur_pov.position;
         let w = init_dim/zoom;
         let h = init_dim/zoom;
 
@@ -113,7 +105,7 @@ class Window
     show(cur_pov, zoom)
     {
         //show all the frames within the viewport
-        let cur_pos = cur_pov.center_of_mass;
+        let cur_pos = cur_pov.position;
         let w = init_dim/zoom;
         let h = init_dim/zoom;
 

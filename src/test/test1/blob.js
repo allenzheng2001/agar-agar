@@ -9,7 +9,6 @@ class Blob {
     this.velocity = createVector(0,0);
 
     this.color = 'rgb(255, 255, 255)';
-    this.spawn_time = Date.now()/1000;
   }
 
   eats(other)
@@ -38,52 +37,45 @@ class PlayerBlob extends Blob
     this.color = 'rgb(0, 0, 255)';
     this.stopped = false;
     this.fast = false;
-
-    this.action_time = Date.now()/1000;
-    this.duration = 0;
   }
 
-  move(vel)
+  fast_on()
   {
-    if(this.duration > 0)
-    {
-      this.position.add(this.velocity);
-      if(Date.now()/1000 - this.action_time >= this.duration)
-        this.free_move();
-    }
+    this.fast = (this.radius > init_r);
+  }
+
+  fast_off()
+  {
+    this.fast = false;
+  }
+
+  move()
+  {
+    var mouse_vel = createVector(mouseX - width/2, mouseY - height/2);
+    mouse_vel.normalize();
+
+    let fair_speed = 1 + 128/this.radius
+
+    if(this.fast)
+      mouse_vel.setMag(2*fair_speed)
     else
-    {
-      let dir = Window.mouse_convert(this.position)
-      dir.setMag(vel.mag()/Math.cos(vel.angleBetween(dir)));
-      this.position.add(dir);
-    }
-  }
-  
-  fix_move(vel, dur)
-  {
-    this.action_time = Date.now()/1000;
-    this.velocity = vel; 
-    this.duration = dur;
+      mouse_vel.setMag(fair_speed);
+    this.velocity.lerp(mouse_vel, .1);
+    this.position.add(this.velocity);
   }
 
-  free_move()
+  update()
   {
-    this.velocity = ZERO_VEC;
-    this.duration = 0;
-  }
-
-  update(mode)
-  {
-    if(mode == FAST)
+    this.move();
+    if(this.fast)
     {
       this.color = 'rgba(0, 0, 255, .5)';
-      this.radius = (this.radius <= init_r) ? this.radius: this.radius - fast_shrink_r;
-      if(this.radius <= init_r)
-        return NORMAL;
+      this.radius = (this.radius < init_r + fast_shrink_r) ? init_r: this.radius - fast_shrink_r;
+      if(this.radius == init_r)
+        this.fast = false;
     }
     else
       this.color = 'rgb(0, 0, 255)';
-    return mode;
   }
 
   show()

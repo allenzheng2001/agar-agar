@@ -14,19 +14,34 @@ Current implementation:
 - spawn one food elsewhere in the world per one that gets eaten
 - speed up and shrink (press f)
 
+(test3)
+- Player object that supports multiple blobs: around a center of mass.
+- Binary Fission: Split on an axis perpendicular to mouse vector (vel'koz q)
+    - blobs can only split at a certain size (s.t. splitted blobs aren't smaller than initial)
+    - split speed scales with size of the splitted blob
+    - can only have a max number of children (8)
+- multiple blobs: lerp to our center of mass -- it's constantly changing!
+- convergence: vector from each blob to the mouse, scaled according to cosine to follow the CoM (not go off window)
+    - converges after a time expiration, which increases based on total size for fairness
+        - could be more smooth
+
 
 TODO (subject to change):
-- binary fission, then converge (test3)
+- perhaps use PID's so self-blobs don't automatically eat each other    
 - add NPCs? (test4)
-- add course hazards (auto-generating?)
+- add course hazards (test5)
     - breaker
     - mirror
     - black hole / E&M field (changes velocity O_O)
     - negative foods?
-- add biomes (refactory)?
+- add biomes (test6)?
+    - textured water, forest, lava, etc.
+    - index of refraction, viscosity, food density
+    - adjacent frames should try to generate as the same type
 - QoL: increase speed (done), safe mode. both decrease radius
 
 FUTURE DIRECTIONS (after turn in)
+- store "world" info on disk for very large worlds (single player)
 - networking for multiplayer
 - 3D?
 
