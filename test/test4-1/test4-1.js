@@ -5,12 +5,11 @@ var food = [];
 var zoom = 1;
 
 var paused = false;
-var game_over = false;
 
 function setup() {
   createCanvas(init_dim, init_dim);
   world = new Window();
-  me = new Player(0, 0, init_r);
+  me = new Player(0, 0, 2*init_r);
   world.npcs.push(new NonPlayerBlob(0, -600, 2*init_r));
 }
 
@@ -46,7 +45,6 @@ function keyReleased()
 
 function draw() {
   background(0);
-  console.log(me.components.length);
 
   translate(width / 2, height / 2);
   var newzoom = init_r/me.size;
@@ -56,7 +54,6 @@ function draw() {
 
   me.show();
   world.show(me, zoom);
-
 
   if(!paused)
   {

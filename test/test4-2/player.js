@@ -137,12 +137,6 @@ class Player
             if(this.components[c_id].radius == 0)
                 this.components.splice(c_id, 1);
 
-        if(this.components.length == 0)
-        {
-            game_over = true;
-            return;
-        }
-
         var tot_m = 0;
         var tot_x = 0;
         var tot_y = 0;

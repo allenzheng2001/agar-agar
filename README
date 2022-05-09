@@ -24,12 +24,19 @@ Current implementation:
 - convergence: vector from each blob to the mouse, scaled according to cosine to follow the CoM (not go off window)
     - converges after a time expiration, which increases based on total size for fairness
         - could be more smooth
+        - fixed sec(x) oob
 - reset functionality (press r)
+
+- non-playing blobs can eat and get eaten
 
 
 TODO (subject to change):
-- perhaps use PID's so self-blobs don't automatically eat each other    
-- add NPCs? (test4)
+- non-playing blobs can move, they are NonPlayer objects instead of NonPlayerBlobs
+    - varying radii
+    - have their own behavior, fixed movement, random splitting/fasting?
+    - self-updating
+- game over screen (test4)
+
 - add course hazards (test5)
     - breaker
     - mirror
