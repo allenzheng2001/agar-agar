@@ -27,15 +27,23 @@ Current implementation:
         - fixed sec(x) oob
 - reset functionality (press r)
 
-- non-playing blobs can eat and get eaten
+(test4)
+- non-playing blobs can eat and get eaten 
+- game over screen, size display 
+- with reflect() function, safe mode (radius decreasing), stop mode
+- non-playing blobs can move, they are NonPlayer objects instead of NonPlayerBlobs
+    -npcs extend the world window
+    -npcs can eat each other 
+    -npcs can split
+    -npcs can be safe/fast
+- debugger mode: Size display, World coordinates display, NPCs display
+- NPC behavior
+    - varying radii
+    - fixed, random movement
+- auto generation: spawn based on # of tiles and density requirement. off-window npcs despawn.
 
 
 TODO (subject to change):
-- non-playing blobs can move, they are NonPlayer objects instead of NonPlayerBlobs
-    - varying radii
-    - have their own behavior, fixed movement, random splitting/fasting?
-    - self-updating
-- game over screen (test4)
 
 - add course hazards (test5)
     - breaker
@@ -49,6 +57,7 @@ TODO (subject to change):
 - QoL: increase speed (done), safe mode. both decrease radius
 
 FUTURE DIRECTIONS (after turn in)
+- Smarter NPC Behavior (reflect() on world edges?), random splitting/fasting?
 - store "world" info on disk for very large worlds (single player)
 - networking for multiplayer
 - 3D?

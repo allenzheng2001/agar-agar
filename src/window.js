@@ -5,7 +5,8 @@ class Window
     constructor()
     {
         this.grid = new Map(); // <x, <y, frame>>
-        this.npcs = [];
+        this.npcs = new Map(); // <id, npc>
+        this.cur_npc_id = 1;
 
         for(var i = -1; i <= 1; i++)
         {
@@ -28,14 +29,30 @@ class Window
         return p5.Vector.sub(mouse_world, position);
     }
 
-    spawnNPC()
+    spawnNPCs(num)
     {
-        let all_sets = [...this.grid.values()];
-        let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
-        let frames =  [...rand_set.values()];
-        let rand_frame = frames[Math.floor(random(0, frames.length))];
+        if(num <= 0)
+            return;
+        for(let i = 0; i < num; i++)
+        {
+            let all_sets = [...this.grid.values()];
+            let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
+            let frames =  [...rand_set.values()];
+            let rand_frame = frames[Math.floor(random(0, frames.length))];
 
-        rand_frame.spawnNPC(this.npcs);
+            this.spawnNPC(rand_frame.rand_x(), rand_frame.rand_y(), random(init_r, 3*init_r), p5.Vector.random2D());
+        }
+    }
+
+    spawnNPC(x, y, r, v)
+    {
+        let spawned = new NonPlayer(x, y, r, v);
+        this.npcs.set(spawned.id, spawned);
+    }
+
+    despawnNPC(npc)
+    {
+        this.npcs.delete(npc.id);
     }
 
     spawnFood()
@@ -97,31 +114,12 @@ class Window
         this.extend(cur_pos.x - w/2, cur_pos.y + h/2);
         this.extend(cur_pos.x + w/2, cur_pos.y - h/2);
         this.extend(cur_pos.x + w/2, cur_pos.y + h/2);
+        
+        for(let npc of [...this.npcs.values()])
+            npc.update();
 
-        //check for changes in the window
-        let min_x = Frame.convert(cur_pos.x - w/2);
-        let max_x = Frame.convert(cur_pos.x + w/2);
-        let min_y = Frame.convert(cur_pos.y - h/2);
-        let max_y = Frame.convert(cur_pos.y + h/2);
-
-        for(var i = min_x; i <= max_x; i++)
-        {
-            for(var j = min_y; j <= max_y; j++)
-            {
-                if(!(this.grid.has(i) && this.grid.get(i).has(j)))
-                {
-                    if(!this.grid.has(i))
-                        this.grid.set(i, new Map());
-                    this.grid.get(i).set(j, new Frame(i, j, true));
-                }
-                
-                this.grid.get(i).get(j).checkFood(this);
-            }
-        }
-
-        for(let npc_id = this.npcs.length -1; npc_id >=0; npc_id--)
-            if(this.npcs[npc_id].radius == 0)
-                this.npcs.splice(npc_id, 1);
+        // is there room for another NPC?
+        this.spawnNPCs(Math.floor(Frame.num_frames/npc_rarity - this.npcs.size));
     }
 
     show(cur_pov, zoom)
@@ -150,8 +148,21 @@ class Window
             }
         }
 
-        for(let npc of this.npcs)
+        for(let npc of [...this.npcs.values()])
+        {
             npc.show();
+        }
+    }
+
+    toString()
+    {
+        let str = "Me:\n\tX: " + Math.round(me.center_of_mass.x).toString() + " Y: " + Math.round(me.center_of_mass.y).toString() + "\nNPCs:\n";
+        for(let npc of [...this.npcs.values()])
+        {
+            str += "\t" + npc.id.toString() + " : (" + Math.round(npc.center_of_mass.x).toString() + ", " + Math.round(npc.center_of_mass.y).toString() + ")\n";
+            str += "\t\tSize: " + npc.size + "\n";
+        }
+        return str;
     }
 
     print()
@@ -174,16 +185,20 @@ class Window
 
 class Frame
 {
+    static num_frames = 0;
+
     constructor(x, y, edge)
     {
         // frames of 600x600. "origin frame" is from (-300, -300)  to (300, 300)
         this.minX = x*init_dim - init_dim/2;
         this.minY = y*init_dim - init_dim/2;
         this.edge = (x != 0 || y != 0) && edge;
+        Frame.num_frames++;
+        console.log("num frames: " + Frame.num_frames);
 
         // populate the frame with food, other stuff
         this.food = [];
-        for(var i = 0; i < density; i++)
+        for(var i = 0; i < food_density; i++)
             this.food.push(new FoodBlob(random(this.minX, this.minX + init_dim), random(this.minY, this.minY + init_dim)));
     }
 
@@ -203,33 +218,28 @@ class Frame
         this.edge = false;
     }
 
-    spawnNPC(world_npcs)
+    rand_x()
     {
-        world_npcs.push(new NonPlayerBlob(random(this.minX, this.minX + init_dim), random(this.minY, this.minY + init_dim), init_r));
+        return random(this.minX, this.minX + init_dim);
+    }
+
+    rand_y()
+    {
+        return random(this.minY, this.minY + init_dim);
     }
 
     spawnFood()
     {
-        this.food.push(new FoodBlob(random(this.minX, this.minX + init_dim), random(this.minY, this.minY + init_dim)));
+        this.food.push(new FoodBlob(this.rand_x(),this.rand_y()));
     }
 
-    checkFood(world)
+    checkFood(cur_blob)
     {
         for (var i = this.food.length - 1; i >= 0; i--) {
-            if (me.eats(this.food[i])) {
+            if (cur_blob.eats(this.food[i]) != null) {
                 this.food.splice(i, 1);
                 world.spawnFood();
             }
-            else
-                for(let npc of world.npcs) {
-                    if(npc.eats(this.food[i]))
-                    {
-                        this.food.splice(i, 1);
-                        world.spawnFood();
-                    }
-                }
-            for(let npc of world.npcs)
-                me.eats(npc);
         }
     }
 
