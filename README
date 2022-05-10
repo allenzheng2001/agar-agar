@@ -41,6 +41,7 @@ Current implementation:
     - varying radii
     - fixed, random movement
 - auto generation: spawn based on # of tiles and density requirement. off-window npcs despawn.
+- respawn (shift+R): spawn again in the same world. reset: create a new world.
 
 
 TODO (subject to change):
@@ -57,7 +58,7 @@ TODO (subject to change):
 - QoL: increase speed (done), safe mode. both decrease radius
 
 FUTURE DIRECTIONS (after turn in)
-- Smarter NPC Behavior (reflect() on world edges?), random splitting/fasting?
+- Smarter NPC Behavior (bounce off world edges?), random splitting/fasting?
 - store "world" info on disk for very large worlds (single player)
 - networking for multiplayer
 - 3D?
