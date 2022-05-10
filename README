@@ -45,6 +45,7 @@ Current implementation:
 
 
 TODO (subject to change):
+- NPC.act() : random probability of splitting, faston/off, safeon/off
 
 - add course hazards (test5)
     - breaker
@@ -55,7 +56,6 @@ TODO (subject to change):
     - textured water, forest, lava, etc.
     - index of refraction, viscosity, food density
     - adjacent frames should try to generate as the same type
-- QoL: increase speed (done), safe mode. both decrease radius
 
 FUTURE DIRECTIONS (after turn in)
 - Smarter NPC Behavior (bounce off world edges?), random splitting/fasting?
