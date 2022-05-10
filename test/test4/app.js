@@ -10,7 +10,7 @@ var debug_window = false;
 function setup() {
   game_over = false;
   zoom = 1;
-
+  Frame.num_frames = 0;
   createCanvas(init_dim, init_dim);
   world = new Window();
   me = new Player(0, 0, 2*init_r);
@@ -67,6 +67,11 @@ function keyPressed()
   else if (key == 'r')
   {
     setup();
+  }
+  else if (key == 'R')
+  {
+    if(game_over)
+      me = world.respawn();
   }
 }
 
@@ -139,6 +144,8 @@ function draw() {
     text('Game Over!', init_dim/5, init_dim/2);
     fill(255, 255, 255);
     textSize(16)
-    text('Press R to Play Again... ', init_dim/3, 2*init_dim/3);
+    text('... Shift + R to Respawn', init_dim/3, 2*init_dim/3);
+    text('Press R to Start Over... ', init_dim/3, 7*init_dim/12);
+    textSize(16)
   }
 }

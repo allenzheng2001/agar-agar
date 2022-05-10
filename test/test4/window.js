@@ -29,6 +29,16 @@ class Window
         return p5.Vector.sub(mouse_world, position);
     }
 
+    respawn()
+    {
+        let all_sets = [...this.grid.values()];
+        let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
+        let frames =  [...rand_set.values()];
+        let rand_frame = frames[Math.floor(random(0, frames.length))];
+
+        return new Player(rand_frame.rand_x(), rand_frame.rand_y(), init_r);
+    }
+
     spawnNPCs(num)
     {
         if(num <= 0)
