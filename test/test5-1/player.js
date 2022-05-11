@@ -17,6 +17,8 @@ class Player
         this.fix_duration = 0;
         this.merge_start = -1;
 
+        this.to_add = [];
+
         this.id = 0;
     }
 
@@ -83,6 +85,13 @@ class Player
         this.mode = SPLIT;
         this.merge_start = -1;
         this.action_time = Date.now()/1000;
+    }
+
+    update_components()
+    {
+        for(let newBlob of this.to_add)
+            this.components.push(newBlob);
+        this.to_add = [];
     }
 
     split()
@@ -168,13 +177,6 @@ class Player
         for(let npc of [...world.npcs.values()])
             this.eats(npc);
 
-        if(this.components.length == 0)
-        {
-            this.size = 0; 
-            game_over = true;
-            return;
-        }
-
         var tot_m = 0;
         var tot_x = 0;
         var tot_y = 0;
@@ -201,6 +203,14 @@ class Player
         this.size = Math.sqrt(tot_m) * init_r;
         let new_CoM = createVector(tot_x/tot_m, tot_y/tot_m);
         this.center_of_mass.lerp(new_CoM, .1);
+
+        this.update_components();
+        if(this.components.length == 0)
+        {
+            this.size = 0; 
+            game_over = true;
+            return;
+        }
     }
 
     show()
@@ -324,14 +334,7 @@ class NonPlayer extends Player
             this.eats(npc);
             if(this.size == 0)
                 break;
-        }   
-
-
-        if(this.components.length == 0)
-        {
-            world.despawnNPC(this);
-            return;
-        }
+        } 
 
         var tot_m = 0;
         var tot_x = 0;
@@ -360,12 +363,20 @@ class NonPlayer extends Player
         let new_CoM = createVector(tot_x/tot_m, tot_y/tot_m);
         this.center_of_mass.lerp(new_CoM, .1);
 
+        this.update_components();
+        
+        if(this.components.length == 0)
+        {
+            world.despawnNPC(this);
+            return;
+        }
+        
         let grid_x = Frame.convert(this.center_of_mass.x);
         let grid_y = Frame.convert(this.center_of_mass.y);
-
         if(!world.grid.has(grid_x) || !world.grid.get(grid_x).has(grid_y))
             world.despawnNPC(this);
         else if(!npc_can_extend && world.grid.get(grid_x).get(grid_y).isEdge())
             this.change_dir(createVector(-this.center_of_mass.x, -this.center_of_mass.y));
+
     }
 }

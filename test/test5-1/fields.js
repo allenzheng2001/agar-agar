@@ -45,7 +45,7 @@ var npc_change_chance = 10 + npc_safe_chance;
 
 var reflect_time = 1; //seconds to reflect 
 
-var breaker_hide_flag = false;
+var breaker_hide_flag = true;
 
 //constants for math
 var SQRT_2 = 1.41421356;

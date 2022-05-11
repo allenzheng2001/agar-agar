@@ -51,8 +51,8 @@ Current implementation:
     - breaker
         - rhomboid shape but can be adjusted to any polygon
         - automatically splits() (refactored) any *blob* that touches it. Of course, center of mass is adjusted.
-        - too-small or too-extra (EXPERIMENTAL) blobs are killed. careful or the player will be killed.
-        - can hide behind if small enough w/ breaker_hide_flag (EXPERIMENTAL)
+        - too-small or too-extra blobs are killed. careful or the player will be killed.
+        - or can hide behind if small enough w/ breaker_hide_flag (EXPERIMENTAL)
 
 TODO (subject to change):
 - more hazards

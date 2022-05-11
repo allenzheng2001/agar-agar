@@ -18,6 +18,9 @@ class Hazard
             console.log("PANIC: vertex v2 " + v2 + " out of bounds");
             return;
         }
+
+        if(p5.Vector.dist(blob.position, this.vertices[v1]) <= blob.radius || p5.Vector.dist(blob.position, this.vertices[v2]) <= blob.radius)
+            return true;
         
         let line = p5.Vector.sub(this.vertices[v2], this.vertices[v1]);
         let m = line.y/line.x;
@@ -102,8 +105,8 @@ class Breaker extends Hazard
                     {
                         let children = blob.split(axis, player.color, player.id);
                         player.toggle_split_mode();
-                        player.components.push(children[0]);
-                        player.components.push(children[1]);
+                        player.to_add.push(children[0]);
+                        player.to_add.push(children[1]);
                     }
                 }
                 return;

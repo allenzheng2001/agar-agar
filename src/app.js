@@ -123,6 +123,7 @@ function draw() {
     {
       me.update();
       world.update(me, zoom);
+      console.log(me);
     }
 
     fill(255, 255, 255);
