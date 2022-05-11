@@ -40,28 +40,38 @@ Current implementation:
 - NPC behavior
     - varying radii
     - fixed, random movement
-- auto generation: spawn based on # of tiles and density requirement. off-window npcs despawn.
+- auto generation (toggle with npc_auto_spawn): spawn based on # of tiles and density requirement. off-window npcs despawn.
 - respawn (shift+R): spawn again in the same world. reset: create a new world.
+- Smarter NPC Behavior (bounce off world edges - npc_can_extend toggle)
+- EXPERIMENTAL:  NPC.act() : random probability of splitting, faston/off, safeon/off, random direction change
 
+
+- Circle-Line-Segment Ray-Intersection between center and each edge: Hazard.intersectsEdge()
+- add course hazards
+    - breaker
+        - rhomboid shape but can be adjusted to any polygon
+        - automatically splits() (refactored) any *blob* that touches it. Of course, center of mass is adjusted.
+        - too-small or too-extra (EXPERIMENTAL) blobs are killed. careful or the player will be killed.
+        - can hide behind if small enough w/ breaker_hide_flag (EXPERIMENTAL)
 
 TODO (subject to change):
-- NPC.act() : random probability of splitting, faston/off, safeon/off
-
-- add course hazards (test5)
-    - breaker
-    - mirror
-    - black hole / E&M field (changes velocity O_O)
+- more hazards
+    - mirror  
+    - black hole / E&M field (test5)
     - negative foods?
+    - autogenerating
 - add biomes (test6)?
     - textured water, forest, lava, etc.
     - index of refraction, viscosity, food density
     - adjacent frames should try to generate as the same type
 
 FUTURE DIRECTIONS (after turn in)
-- Smarter NPC Behavior (bounce off world edges?), random splitting/fasting?
 - store "world" info on disk for very large worlds (single player)
 - networking for multiplayer
 - 3D?
+
+Potential Issues:
+- "Spawnkilling" - respawning does not consider the locations of NPCs/hazards, albeit the probability that you spawn on top of one is quite low.
 
 
 

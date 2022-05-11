@@ -274,7 +274,7 @@ class NonPlayer extends Player
             }
             else
             {
-                let copy = new PlayerBlob(x, y, r);
+                let copy = new NonPlayerBlob(x, y, r, this.color, this.id);
                 copy.fix_move(ZERO_VEC, split_time);
                 temp.push(copy);
             }
