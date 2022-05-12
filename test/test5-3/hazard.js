@@ -9,9 +9,6 @@ class Hazard
     static intersectsEdge(blob, v1, v2)
     {   
         let line = p5.Vector.sub(v2, v1);
-        if(p5.Vector.dist(blob.position, v1) <= blob.radius || p5.Vector.dist(blob.position, v2) <= blob.radius)
-            return true;
-
         if(line.x == 0)
         {
             let larger_y = (v1.y > v2.y) ? v1.y: v2.y;
@@ -134,6 +131,7 @@ class Mirror extends Hazard
     {
         if(Hazard.intersectsEdge(blob, this.vertices[0], this.vertices[1]))
         {
+            console.log("isect on mirror " + blob.velocity);
             let edge = p5.Vector.sub(this.vertices[0], this.vertices[1]);
             blob.reflect(edge);
         }
@@ -142,9 +140,7 @@ class Mirror extends Hazard
     show()
     {
         stroke(0, 255, 0); //reflective objects are the same color
-        strokeWeight(5);
         line(this.vertices[0].x, this.vertices[0].y, this.vertices[1].x, this.vertices[1].y);
-        strokeWeight(1);
         stroke(0);
     }
 }

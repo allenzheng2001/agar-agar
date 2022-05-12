@@ -144,9 +144,6 @@ class PlayerBlob extends Blob
   update(mode)
   {
     //am I touching anything?
-    if(this.velocity === undefined)
-      this.velocity = createVector(0, 0);
-      
     let min_x = Frame.convert(this.position.x - this.radius) - 1;
     let max_x = Frame.convert(this.position.x + this.radius) + 1;
     let min_y = Frame.convert(this.position.y - this.radius) - 1;

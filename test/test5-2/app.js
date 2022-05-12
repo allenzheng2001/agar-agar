@@ -13,7 +13,7 @@ function setup() {
   Frame.num_frames = 0;
   createCanvas(init_dim, init_dim);
   world = new Window();
-  me = new Player(0, 0, 2*init_r);
+  me = new Player(0, 0, 4*init_r);
   world.spawnNPC(-600, -300, init_r, createVector(1, 0));
 }
 

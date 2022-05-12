@@ -54,13 +54,17 @@ Current implementation:
         - too-small or too-extra blobs are killed. careful or the player will be killed.
         - or can hide behind if small enough w/ breaker_hide_flag (EXPERIMENTAL)
     - mirror
+        - green (reflective-indicating) shape
+        - bounces like a ray would, == angle of incidence  
+    - black hole / E&M field (test5)
+        - gravitational field with acceleration & radius of effect - field is stronger as you mov closer
+            - acceleration is always the same regardless of the blob's mass! according to physics 
+        - ... light mode to see the black rings
+    - autogenerating with rarities
+
+        
 
 TODO (subject to change):
-- more hazards
-    - mirror  
-    - black hole / E&M field (test5)
-    - negative foods?
-    - autogenerating
 - add biomes (test6)?
     - textured water, forest, lava, etc.
     - index of refraction, viscosity, food density

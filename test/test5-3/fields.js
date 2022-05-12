@@ -22,11 +22,7 @@ var DEFAULT_A = 255;
 var FAST_A = 128;
 
 var food_density = 12; //food per frame
-var breaker_rarity = .15;
-var mirror_rarity = .1;
-var bh_rarity = .05;
-
-var fast_shrink_r = .3; //rate of radius shrink on FAST
+var fast_shrink_r = .5; //rate of radius shrink on FAST
 var safe_shrink_r = .0001; //rate of radius shrink on SAFE
 
 var min_split_scale = 1.5; // min size (rel. to initial) to split
@@ -39,12 +35,11 @@ var merge_time_base = 5; //seconds to merge (base, will scale with size)
 var merge_vel_scale = 1/90; // merge speed factor
 var safe_merge_vel_scale = 1/20; // merge speed factor
 
-var npc_auto_spawn = true;
-var npc_speed = 1;
-var npc_can_extend = false; // can the npc extend the world like the player can? or will it bounce back?
+var npc_auto_spawn = false;
+var npc_can_extend = true; // can the npc extend the world like the player can? or will it bounce back?
 var npc_rarity = 17; //how many frames before you spot the next NPC
 
-var npc_self_act = true;
+var npc_self_act = false;
 var npc_moves_before_act = 50;
 var npc_split_chance = 5;
 var npc_fast_chance = 2 + npc_split_chance;

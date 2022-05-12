@@ -172,8 +172,6 @@ class Player
   
     update()
     {
-        if(this.velocity === undefined)
-            this.velocity = createVector(0, 0);
         this.move();
 
         for(let npc of [...world.npcs.values()])
@@ -232,9 +230,6 @@ class NonPlayer extends Player
         this.components = [];
         this.color = createVector(random(128, 255), random(0, 128), random(0, 128));
         this.id = world.cur_npc_id++;
-        
-        v.setMag(npc_speed);
-
         this.components.push(new NonPlayerBlob(x, y, r, this.color, this.id, v));
 
         this.velocity = v;
@@ -328,8 +323,6 @@ class NonPlayer extends Player
 
     update()
     {
-        if(this.velocity === undefined)
-            this.velocity = createVector(0, 0);
         if(npc_self_act)
             this.act();
         this.move();
