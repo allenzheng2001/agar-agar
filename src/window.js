@@ -220,8 +220,7 @@ class Frame
         this.hazards = [];
         if(spawn_flag)
         {
-            this.hazards.push(new Mirror(0, 300, createVector(1, 0)));
-            this.hazards.push(new Mirror(0, -300, createVector(2, 1)));
+            this.hazards.push(new BlackHole(600, 600));
         }
     }
 

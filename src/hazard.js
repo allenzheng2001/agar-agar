@@ -151,6 +151,20 @@ class BlackHole extends Hazard
     {
         super(x,y);
     }
+
+    show()
+    {
+        let cur_dist = 0;
+        for(let i = 5; i >= 0; i--)
+        {
+            stroke(255);
+            noFill();
+            ellipse(this.position.x, this.position.y, 60  +  25 * i* i, 60 + 25 * i* i);
+        }
+        stroke(0);
+        fill(255);
+        ellipse(this.position.x, this.position.y, 60, 60);
+    }
 }
 
 
