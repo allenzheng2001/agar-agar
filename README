@@ -53,6 +53,7 @@ Current implementation:
         - automatically splits() (refactored) any *blob* that touches it. Of course, center of mass is adjusted.
         - too-small or too-extra blobs are killed. careful or the player will be killed.
         - or can hide behind if small enough w/ breaker_hide_flag (EXPERIMENTAL)
+    - mirror
 
 TODO (subject to change):
 - more hazards
@@ -72,6 +73,9 @@ FUTURE DIRECTIONS (after turn in)
 
 Potential Issues:
 - "Spawnkilling" - respawning does not consider the locations of NPCs/hazards, albeit the probability that you spawn on top of one is quite low.
+- merging is absolute unless another split is made. this can cause unwanted merging after pausing or reflecting
+- Mirrors - Occasional buggy behavior on intersection, undefined behavior near edges of line segment
+
 
 
 
