@@ -64,9 +64,11 @@ Current implementation:
 
 (test6)
 - biomes
-    - http server: cd src, python3 -m http.server
-    - textured water, forest, lava, etc.
+    - http server: cd src, python3 -m http.server, or npm install http-server -g, http-server -c-1
+    - included as part of the "frame" in autogeneration
+    - textured water, forest, lava, etc. backgrounds (eight total in assets)
     - varying densities of different properties
+        - varying shapes of breakers
     - adjacent frames should try to generate as the same type
     - players can't enter lava, but NPCs can
 
