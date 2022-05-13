@@ -81,8 +81,10 @@ FUTURE DIRECTIONS (after turn in)
 
 Potential Issues:
 - "Spawnkilling" - respawning does not consider the locations of NPCs/hazards, albeit the probability that you spawn on top of one is quite low.
-- merging is absolute unless another split is made. this can cause unwanted merging after pausing or reflecting
 - Mirrors - Buggy movement (keeps bouncing within itself) if an NPC spawns on top of it
+    - both are solved if spawns are handled with regards to hazard locations  intelligently -- naively that's a lot of intersection calculations.
+- merging is absolute unless another split is made. this can cause unwanted merging after pausing or reflecting
+    - merging sometimes doesn't happen unless you split again to reset the timer
 
 
 

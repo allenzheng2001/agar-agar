@@ -63,15 +63,37 @@ class Hazard
 
 class Breaker extends Hazard
 {
-    constructor(x, y)
+    constructor(x, y, biome)
     {
         super(x,y);
         this.len = random(breaker_min_len, breaker_max_len);
+        this.color = color(255, 0, 255);
 
-        this.vertices.push(createVector(x, y + this.len)); // N vertex
-        this.vertices.push(createVector(x + this.len, y)); // E vertex
-        this.vertices.push(createVector(x, y - this.len)); // S vertex
-        this.vertices.push(createVector(x - this.len, y)); // W vertex 
+        if(biome.breaker_shape == HEXAGON)
+        {
+            this.vertices.push(createVector(x - .5*this.len, y + SQRT_3*.5*this.len));
+            this.vertices.push(createVector(x + .5*this.len, y + SQRT_3*.5*this.len));
+            this.vertices.push(createVector(x + this.len, y));
+            this.vertices.push(createVector(x + .5*this.len, y - SQRT_3*.5*this.len));
+            this.vertices.push(createVector(x - .5*this.len, y - SQRT_3*.5*this.len));
+            this.vertices.push(createVector(x - this.len, y));
+            this.color = color(255, 128, 255);
+        }
+        else if(biome.breaker_shape == TRIANGLE)
+        {
+            this.vertices.push(createVector(x, y + 1/SQRT_3*this.len));
+            this.vertices.push(createVector(x + .5*this.len, y - .5/SQRT_3*this.len));
+            this.vertices.push(createVector(x - .5*this.len, y - .5/SQRT_3*this.len));
+            this.color = color(153, 0, 153);
+        }
+        else 
+        {
+            //DEFAULT
+            this.vertices.push(createVector(x, y + this.len)); // N vertex
+            this.vertices.push(createVector(x + this.len, y)); // E vertex
+            this.vertices.push(createVector(x, y - this.len)); // S vertex
+            this.vertices.push(createVector(x - this.len, y)); // W vertex 
+        }
     }
 
     interact(blob)
@@ -85,7 +107,7 @@ class Breaker extends Hazard
         }
 
         for(let vertex = 0; vertex < this.vertices.length; vertex++)
-            if(Hazard.intersectsEdge(blob, this.vertices[vertex], this.vertices[(vertex + 1) % 4]))
+            if(Hazard.intersectsEdge(blob, this.vertices[vertex], this.vertices[(vertex + 1) % this.vertices.length]))
             {
                 let axis = p5.Vector.sub(this.position, blob.position);
                 if(breaker_hide_flag && blob.radius < init_r*min_split_scale)
@@ -109,10 +131,10 @@ class Breaker extends Hazard
 
     show()
     {
-        fill(255, 0, 255);
+        fill(this.color);
         beginShape();
-        for(let v of this.vertices)
-            vertex(v.x, v.y);
+        for(let i = 0; i < this.vertices.length; i++)
+            vertex(this.vertices[i].x, this.vertices[i].y);
         endShape();
     }
 }
@@ -177,7 +199,7 @@ class BlackHole extends Hazard
                 return;
             player.components.splice(blob_index, 1);
         }
-        else if(dist < this.effect_radius)
+        else if(dist < this.effect_radius + blob.radius)
         {
             let gravity_dir = p5.Vector.sub(this.position, blob.position);
             let accel_mag =  GRAVITY_CONSTANT * this.mass/gravity_dir.magSq();// G*m2/r^2 (F= ma, m1 is divided!)

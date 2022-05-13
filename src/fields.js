@@ -57,9 +57,15 @@ var bh_ring_scale = 12;
 var bh_min_mass = 5e14;
 var bh_max_mass = 1e15;
 
-var biome_frames = 25; // how many frames to generate a certain biome before moving on to the next type
+var biome_frames = 5; // how many frames to generate a certain biome before moving on to the next type
+
+//shapes
+var TRIANGLE = 3;
+var RHOMBOID = 4;
+var HEXAGON = 6;
 
 //constants for math
 var SQRT_2 = 1.41421356;
+var SQRT_3 = 1.73205081;
 var GRAVITY_CONSTANT = 6.67e-11; 
 

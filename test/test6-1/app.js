@@ -158,7 +158,6 @@ function draw() {
     {
       text(world.toString(), text_x, text_y + 16/zoom);
     }
-
   }
   else
   {

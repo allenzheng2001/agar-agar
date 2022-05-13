@@ -19,6 +19,7 @@ function preload()
   images.push(loadImage('assets/mountain.jpg'));
   images.push(loadImage('assets/ocean.jpg'));
   images.push(loadImage('assets/rocky.jpg'));
+  images.push(loadImage('assets/desert.jpg'));
 }
 
 function setup() 
@@ -97,7 +98,6 @@ function keyPressed()
     if(game_over)
     {
       me = world.respawn();
-      console.log("lol");
     }
   }
 }

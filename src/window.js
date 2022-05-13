@@ -184,7 +184,10 @@ class Window
 
     toString()
     {
-        let str = "Me:\n\tX: " + Math.round(me.center_of_mass.x).toString() + " Y: " + Math.round(me.center_of_mass.y).toString() + "\nNPCs:\n";
+        let str = "Me:\n\tX: " + Math.round(me.center_of_mass.x).toString() + " Y: " + Math.round(me.center_of_mass.y).toString() + "\n";
+        let grid_x = Frame.convert(me.center_of_mass.x);
+        let grid_y = Frame.convert(me.center_of_mass.y);
+        str += "\tCurrent Biome: " + world.grid.get(grid_x).get(grid_y).biome.name + "\nNPCs:\n";
         for(let npc of [...this.npcs.values()])
         {
             str += "\t" + npc.id.toString() + " : (" + Math.round(npc.center_of_mass.x).toString() + ", " + Math.round(npc.center_of_mass.y).toString() + ")\n";
@@ -240,7 +243,7 @@ class Frame
         if(this.edge)
         {
             if(random(0, 1) < this.biome.breaker_rarity)
-                this.hazards.push(new Breaker(random(this.minX, this.minX + init_dim), random(this.minY, this.minY + init_dim)))   
+                this.hazards.push(new Breaker(random(this.minX, this.minX + init_dim), random(this.minY, this.minY + init_dim), this.biome))   
             if(random(0, 1) < this.biome.mirror_rarity)
                 this.hazards.push(new Mirror(random(this.minX, this.minX + init_dim), random(this.minY, this.minY + init_dim), p5.Vector.random2D()));
             if(random(0, 1) < this.biome.bh_rarity)
