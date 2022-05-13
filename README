@@ -61,7 +61,9 @@ Current implementation:
             - acceleration is always the same regardless of the blob's mass! according to physics 
         - ... light mode to see the black rings
     - autogenerating with rarities
-- biomes (test6)
+
+(test6)
+- biomes
     - http server: cd src, python3 -m http.server
     - textured water, forest, lava, etc.
     - varying densities of different properties
