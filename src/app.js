@@ -95,7 +95,10 @@ function keyPressed()
   else if (key == 'R')
   {
     if(game_over)
+    {
       me = world.respawn();
+      console.log("lol");
+    }
   }
 }
 

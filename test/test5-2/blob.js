@@ -93,8 +93,9 @@ class PlayerBlob extends Blob
     if(Date.now()/1000 - this.reflect_time <= REFLECT_DELTA)
       return;
     let dir = createVector(-this.velocity.x, -this.velocity.y);
-    //let n = axis.rotate(Math.PI);
-    dir.reflect(axis);
+    let angle = dir.angleBetween(axis);
+    let flipped_dir = (p5.Vector.rotate(dir, 2*angle));
+    dir = createVector(-flipped_dir.x, -flipped_dir.y);
     this.reflect_time = Date.now()/1000;
     this.fix_move(dir.setMag(this.velocity.mag()), reflect_time)
   }

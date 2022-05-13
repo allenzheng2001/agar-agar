@@ -33,11 +33,20 @@ class Window
 
     respawn()
     {
+        game_over = false;
+
+        let spawn_biome = Biomes.LAVA;
         let all_sets = [...this.grid.values()];
         let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
         let frames =  [...rand_set.values()];
         let rand_frame = frames[Math.floor(random(0, frames.length))];
-
+        spawn_biome = rand_frame.biome.id;
+        while(spawn_biome == Biomes.LAVA)
+        {
+            rand_set = all_sets[Math.floor(random(0, all_sets.length))];
+            rand_frame = frames[Math.floor(random(0, frames.length))];
+            spawn_biome = rand_frame.biome.id;
+        }
         return new Player(rand_frame.rand_x(), rand_frame.rand_y(), init_r);
     }
 
@@ -73,6 +82,8 @@ class Window
         let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
         let frames =  [...rand_set.values()];
         let rand_frame = frames[Math.floor(random(0, frames.length))];
+        if (rand_frame.food.length > rand_frame.biome.food_density)
+            return;
 
         rand_frame.spawnFood();
     }
@@ -131,7 +142,7 @@ class Window
             npc.update();
 
         // is there room for another NPC?
-        if(npc_auto_spawn)
+        if(npc_auto_spawn && this.npcs.size <= npc_max_spawn);
             this.spawnNPCs(Math.floor(Frame.num_frames/npc_rarity - this.npcs.size));
     }
 
@@ -175,7 +186,11 @@ class Window
 
     toString()
     {
-        let str = "Me:\n\tX: " + Math.round(me.center_of_mass.x).toString() + " Y: " + Math.round(me.center_of_mass.y).toString() + "\nNPCs:\n";
+        let str = "Me:\n\tX: " + Math.round(me.center_of_mass.x).toString() + " Y: " + Math.round(me.center_of_mass.y).toString() + "\n";
+        let grid_x = Frame.convert(me.center_of_mass.x);
+        let grid_y = Frame.convert(me.center_of_mass.y);
+        str += "\tCurrent Biome: " + world.grid.get(grid_x).get(grid_y).biome.name + "\nNPCs:\n";
+        console.log(str);
         for(let npc of [...this.npcs.values()])
         {
             str += "\t" + npc.id.toString() + " : (" + Math.round(npc.center_of_mass.x).toString() + ", " + Math.round(npc.center_of_mass.y).toString() + ")\n";

@@ -38,6 +38,7 @@ var npc_auto_spawn = true;
 var npc_speed = 1;
 var npc_can_extend = false; // can the npc extend the world like the player can? or will it bounce back?
 var npc_rarity = 17; //how many frames before you spot the next NPC
+var npc_max_spawn = 20;
 
 var npc_self_act = true;
 var npc_moves_before_act = 50;

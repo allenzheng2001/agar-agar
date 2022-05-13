@@ -33,13 +33,15 @@ class Window
 
     respawn()
     {
+        game_over = false;
+
         let spawn_biome = Biomes.LAVA;
         let all_sets = [...this.grid.values()];
         let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
         let frames =  [...rand_set.values()];
         let rand_frame = frames[Math.floor(random(0, frames.length))];
         spawn_biome = rand_frame.biome.id;
-        while(spawn_biome != Biomes.LAVA)
+        while(spawn_biome == Biomes.LAVA)
         {
             rand_set = all_sets[Math.floor(random(0, all_sets.length))];
             rand_frame = frames[Math.floor(random(0, frames.length))];

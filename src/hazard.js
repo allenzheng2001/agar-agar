@@ -132,8 +132,15 @@ class Mirror extends Hazard
 
     interact(blob)
     {
+        if(p5.Vector.dist(blob.position, this.vertices[0]) <= blob.radius || 
+        p5.Vector.dist(blob.position, this.vertices[1]) <= blob.radius ||
+        p5.Vector.dist(blob.position, this.position) <= .5*blob.radius)
+        {
+            blob.bounce(this);
+        }
         if(Hazard.intersectsEdge(blob, this.vertices[0], this.vertices[1]))
         {
+            //console.log("isect on mirror " + blob.velocity);
             let edge = p5.Vector.sub(this.vertices[0], this.vertices[1]);
             blob.reflect(edge);
         }
