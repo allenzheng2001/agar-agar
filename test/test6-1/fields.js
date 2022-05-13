@@ -34,12 +34,12 @@ var merge_time_base = 5; //seconds to merge (base, will scale with size)
 var merge_vel_scale = 1/90; // merge speed factor
 var safe_merge_vel_scale = 1/20; // merge speed factor
 
-var npc_auto_spawn = true;
+var npc_auto_spawn = false;
 var npc_speed = 1;
 var npc_can_extend = false; // can the npc extend the world like the player can? or will it bounce back?
 var npc_rarity = 17; //how many frames before you spot the next NPC
 
-var npc_self_act = true;
+var npc_self_act = false;
 var npc_moves_before_act = 50;
 var npc_split_chance = 5;
 var npc_fast_chance = 2 + npc_split_chance;
@@ -56,7 +56,7 @@ var bh_ring_scale = 12;
 var bh_min_mass = 5e14;
 var bh_max_mass = 1e15;
 
-var biome_frames = 25; // how many frames to generate a certain biome before moving on to the next type
+var biome_frames = 5; // how many frames to generate a certain biome before moving on to the next type
 
 //constants for math
 var SQRT_2 = 1.41421356;

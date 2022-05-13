@@ -39,7 +39,7 @@ function setup_helper()
   Biomes.cur_biome = world_biomes.biomes[Biomes.VACUUM];
   world = new Window();
   me = new Player(0, 0, init_r);
-  world.spawnNPC(0, -300, init_r, createVector(1, 0));
+  world.spawnNPC(0, -300, 2*init_r, createVector(1, 0));
 }
 
 
@@ -91,6 +91,7 @@ function keyPressed()
   else if (key == 'r')
   {
     setup_helper();
+    console.log("game over " + game_over)
   }
   else if (key == 'R')
   {

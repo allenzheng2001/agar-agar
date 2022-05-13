@@ -33,18 +33,11 @@ class Window
 
     respawn()
     {
-        let spawn_biome = Biomes.LAVA;
         let all_sets = [...this.grid.values()];
         let rand_set = all_sets[Math.floor(random(0, all_sets.length))];
         let frames =  [...rand_set.values()];
         let rand_frame = frames[Math.floor(random(0, frames.length))];
-        spawn_biome = rand_frame.biome.id;
-        while(spawn_biome != Biomes.LAVA)
-        {
-            rand_set = all_sets[Math.floor(random(0, all_sets.length))];
-            rand_frame = frames[Math.floor(random(0, frames.length))];
-            spawn_biome = rand_frame.biome.id;
-        }
+
         return new Player(rand_frame.rand_x(), rand_frame.rand_y(), init_r);
     }
 
@@ -219,7 +212,7 @@ class Frame
         this.biome = Biomes.cur_biome;
         if(Biomes.frames_left-- < 0)
         {
-            Biomes.cur_biome = world_biomes.random();
+            Biomes.cur_biome = world_biomes.get(3);
             Biomes.frames_left = biome_frames;
         }
 
@@ -230,7 +223,7 @@ class Frame
 
         this.edge = spawn_flag && edge;
         Frame.num_frames++;
-        //console.log("num frames: " + Frame.num_frames);
+        console.log("num frames: " + Frame.num_frames);
 
         // populate the frame with food, other stuff
         this.food = [];
