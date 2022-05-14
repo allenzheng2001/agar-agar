@@ -18,11 +18,12 @@ var SAFE = 2;
 var SPLIT = 3;
 var FIXED = 4;
 
+//rgba (a value) color shading when in different modes
 var DEFAULT_A = 255;
 var FAST_A = 128;
 
 var fast_shrink_r = .3; //rate of radius shrink on FAST
-var safe_shrink_r = .0001; //rate of radius shrink on SAFE
+var safe_shrink_r = .05; //rate of radius shrink on SAFE
 
 var min_split_scale = 1.5; // min size (rel. to initial) to split
 var split_time = .5; //seconds to split
@@ -34,15 +35,16 @@ var merge_time_base = 5; //seconds to merge (base, will scale with size)
 var merge_vel_scale = 1/90; // merge speed factor
 var safe_merge_vel_scale = 1/20; // merge speed factor
 
-var npc_auto_spawn = true;
-var npc_speed = 1;
+var npc_auto_spawn = true; // npc autospawning via world detection
+var npc_speed = 1; //default magnitude of NPC velocity (can increase as difficulty does)
 var npc_can_extend = false; // can the npc extend the world like the player can? or will it bounce back?
 var npc_rarity = 17; //how many frames before you spot the next NPC
-var npc_max_spawn = 20;
+var npc_max_spawn = 20; //how many NPCs can be in the world at once
 
-var npc_self_act = true;
-var npc_moves_before_act = 50;
-var npc_split_chance = 5;
+var npc_self_act = true; // npcs issue player commands randomly
+var npc_moves_before_act = 50; // # of updates before next random move
+//hierarchal summing allows easy probability with exclusive if/else
+var npc_split_chance = 5; 
 var npc_fast_chance = 2 + npc_split_chance;
 var npc_safe_chance = 5 + npc_fast_chance;
 var npc_back_chance = 30 + npc_safe_chance;
@@ -51,10 +53,11 @@ var npc_change_chance = 10 + npc_safe_chance;
 var reflect_time = 1; //seconds to reflect
 var REFLECT_DELTA = 0.1; //so we don't re-register reflect again on the same collision
 
-var bh_event_horizon = 30;
-var bh_num_rings = 5;
-var bh_ring_scale = 12;
-var bh_min_mass = 5e14;
+//BLACK HOLES
+var bh_event_horizon = 30; //radius where certain death is met upon touching
+var bh_num_rings = 5;   
+var bh_ring_scale = 12; // how far apart should rings be?
+var bh_min_mass = 5e14; // black holes have randomly generated masses
 var bh_max_mass = 1e15;
 
 var biome_frames = 5; // how many frames to generate a certain biome before moving on to the next type

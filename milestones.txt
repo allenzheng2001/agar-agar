@@ -1,0 +1,97 @@
+Current implementation:
+(test1)
+- global world, local player:
+- player follows mouse
+- viewport follows player
+- food particles can be eaten
+- smooth lerp to grow size 
+- colors
+
+(test2)
+- expanding window size
+- pause functionality (press p)
+- auto-generation skeleton code
+- generate and expand map "frames" instead of auto-expanding rectangle
+- port over food spawning: auto-generate foods
+- spawn one food elsewhere in the world per one that gets eaten
+- speed up and shrink (hold f)
+
+(test3)
+- Player object that supports multiple blobs: around a center of mass.
+- Binary Fission (space key): Split on an axis perpendicular to mouse vector (vel'koz q)
+    - blobs can only split at a certain size (s.t. splitted blobs aren't smaller than initial)
+    - split speed scales with size of the splitted blob
+    - can only have a max number of children (8)
+- multiple blobs: lerp to our center of mass -- it's constantly changing!
+- convergence: vector from each blob to the mouse, scaled according to cosine to follow the CoM (not go off window)
+    - converges after a time expiration, which increases based on total size for fairness
+        - could be more smooth
+        - fixed sec(x) oob
+- reset functionality (press r)
+
+(test4)
+- non-playing blobs can eat and get eaten 
+- game over screen, size display 
+- with reflect() function, safe mode (radius decreasing), stop mode
+- non-playing blobs can move, they are NonPlayer objects instead of NonPlayerBlobs
+    -npcs extend the world window
+    -npcs can eat each other 
+    -npcs can split
+    -npcs can be safe/fast
+- debugger mode: Size display, World coordinates display, NPCs display
+- NPC behavior
+    - varying radii
+    - fixed, random movement
+- auto generation (toggle with npc_auto_spawn): spawn based on # of tiles and density requirement. off-window npcs despawn.
+- respawn (shift+R): spawn again in the same world. reset: create a new world.
+- Smarter NPC Behavior (bounce off world edges - npc_can_extend toggle)
+- EXPERIMENTAL:  NPC.act() : random probability of splitting, faston/off, safeon/off, random direction change
+
+(test5)
+- Circle-Line-Segment Ray-Intersection between center and each edge: Hazard.intersectsEdge()
+- add course hazards
+    - breaker (test 5-1)
+        - rhomboid shape but can be adjusted to any polygon
+        - automatically splits() (refactored) any *blob* that touches it. Of course, center of mass is adjusted.
+        - too-small or too-extra blobs are killed. careful or the player will be killed.
+        - or can hide behind if small enough w/ breaker_hide_flag (EXPERIMENTAL)
+    - mirror (test 5-2)
+        - green (reflective-indicating) shape
+        - bounces like a ray would, == angle of incidence  
+    - black hole / E&M field (test5-3)
+        - gravitational field with acceleration & radius of effect - field is stronger as you mov closer
+            - acceleration is always the same regardless of the blob's mass! according to physics 
+        - ... light mode to see the black rings
+    - autogenerating with rarities
+
+(test6)
+- biomes
+    - http server: cd src, python3 -m http.server, or npm install http-server -g, http-server -c-1
+    - included as part of the "frame" in autogeneration
+    - textured water, forest, lava, etc. backgrounds (eight total in assets)
+    - varying densities of different properties
+        - varying shapes of breakers
+    - adjacent frames should try to generate as the same type
+    - players can't enter lava, but NPCs can (test 6-1)
+
+        
+
+TODO (subject to change):
+
+FUTURE DIRECTIONS (after turn in)
+- store "world" info on disk for very large worlds (single player)
+- networking for multiplayer
+- 3D?
+
+Potential Issues:
+- "Spawnkilling" - respawning does not consider the locations of NPCs/hazards, albeit the probability that you spawn on top of one is quite low.
+- Mirrors - Buggy movement (keeps bouncing within itself) if an NPC spawns on top of it
+    - both are solved if spawns are handled with regards to hazard locations  intelligently -- naively that's a lot of intersection calculations.
+- merging is absolute unless another split is made. this can cause unwanted merging after pausing or reflecting
+    - merging sometimes doesn't happen unless you split again to reset the timer
+
+
+
+
+
+

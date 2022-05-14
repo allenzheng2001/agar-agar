@@ -5,6 +5,16 @@ var me; // player
 
 var food = [];
 var zoom = 1;
+var paused = false;
+
+function keyPressed()
+{
+  if(key == 'p')
+  {
+    paused = !paused;
+    //world.print();
+  }
+}
 
 function setup() {
   createCanvas(600, 600);
@@ -31,5 +41,8 @@ function draw() {
   }
 
   me.show();
-  me.update();
+  if(!paused)
+  {
+    me.update();
+  }
 }

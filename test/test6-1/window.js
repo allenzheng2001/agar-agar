@@ -142,7 +142,7 @@ class Window
             npc.update();
 
         // is there room for another NPC?
-        if(npc_auto_spawn && this.npcs.size <= npc_max_spawn);
+        if(npc_auto_spawn);
             this.spawnNPCs(Math.floor(Frame.num_frames/npc_rarity - this.npcs.size));
     }
 

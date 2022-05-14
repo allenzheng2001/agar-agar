@@ -1,95 +1,77 @@
-Current implementation:
-(test1)
-- player follows mouse
-- food particles can be eaten
-- smooth lerp to grow size 
-- colors
+eCIS submitted!
 
-(test2)
-- expanding window size
-- pause functionality (press p)
-- auto-generation skeleton code
-- generate and expand map "frames" instead of auto-expanding rectangle
-- port over food spawning: auto-generate foods
-- spawn one food elsewhere in the world per one that gets eaten
-- speed up and shrink (hold f)
+- Source code located in *.js files in /src/. They are described in the writeup, page 2 (REPORT.pdf)
+    - /src/assets/ contains the textures for the Frame biomes.
+- Demo code located in /test/. More details below.
+- milestones.txt was my personal memo for tracking features/progression, but it contains more thorough descriptions of the features and demo milestones. Again, more details below and in that file itself.
 
-(test3)
-- Player object that supports multiple blobs: around a center of mass.
-- Binary Fission (space key): Split on an axis perpendicular to mouse vector (vel'koz q)
-    - blobs can only split at a certain size (s.t. splitted blobs aren't smaller than initial)
-    - split speed scales with size of the splitted blob
-    - can only have a max number of children (8)
-- multiple blobs: lerp to our center of mass -- it's constantly changing!
-- convergence: vector from each blob to the mouse, scaled according to cosine to follow the CoM (not go off window)
-    - converges after a time expiration, which increases based on total size for fairness
-        - could be more smooth
-        - fixed sec(x) oob
-- reset functionality (press r)
+**HOW TO RUN/PLAY** 
+The html file uses an online source to link the p5.js Library, so make sure you have an internet connection!
 
-(test4)
-- non-playing blobs can eat and get eaten 
-- game over screen, size display 
-- with reflect() function, safe mode (radius decreasing), stop mode
-- non-playing blobs can move, they are NonPlayer objects instead of NonPlayerBlobs
-    -npcs extend the world window
-    -npcs can eat each other 
-    -npcs can split
-    -npcs can be safe/fast
-- debugger mode: Size display, World coordinates display, NPCs display
-- NPC behavior
-    - varying radii
-    - fixed, random movement
-- auto generation (toggle with npc_auto_spawn): spawn based on # of tiles and density requirement. off-window npcs despawn.
-- respawn (shift+R): spawn again in the same world. reset: create a new world.
-- Smarter NPC Behavior (bounce off world edges - npc_can_extend toggle)
-- EXPERIMENTAL:  NPC.act() : random probability of splitting, faston/off, safeon/off, random direction change
+How to run:
 
-(test5)
-- Circle-Line-Segment Ray-Intersection between center and each edge: Hazard.intersectsEdge()
-- add course hazards
-    - breaker
-        - rhomboid shape but can be adjusted to any polygon
-        - automatically splits() (refactored) any *blob* that touches it. Of course, center of mass is adjusted.
-        - too-small or too-extra blobs are killed. careful or the player will be killed.
-        - or can hide behind if small enough w/ breaker_hide_flag (EXPERIMENTAL)
-    - mirror
-        - green (reflective-indicating) shape
-        - bounces like a ray would, == angle of incidence  
-    - black hole / E&M field (test5)
-        - gravitational field with acceleration & radius of effect - field is stronger as you mov closer
-            - acceleration is always the same regardless of the blob's mass! according to physics 
-        - ... light mode to see the black rings
-    - autogenerating with rarities
+With npm:
+    cd src
+    npm install http-server -g
+    http-server -c-1
 
-(test6)
-- biomes
-    - http server: cd src, python3 -m http.server, or npm install http-server -g, http-server -c-1
-    - included as part of the "frame" in autogeneration
-    - textured water, forest, lava, etc. backgrounds (eight total in assets)
-    - varying densities of different properties
-        - varying shapes of breakers
-    - adjacent frames should try to generate as the same type
-    - players can't enter lava, but NPCs can
+With python (slower)
+    cd src
+    python3 -m http.server
 
-        
+With VSCode Live Server Extension:
+    open src/index.html on VSCode
+    Click "Go Live" on the bottom
 
-TODO (subject to change):
+How to Play:
+- Open the simple web server that hosts the game.
+- Move your mouse around to make the blob "follow you"
+- Try to get as big as possible by eating (colliding with) other blobs smaller than you
+- Avoid death by larger players eating you, entering black holes, or lava, or you will meet the GAME OVER screen.
 
-FUTURE DIRECTIONS (after turn in)
-- store "world" info on disk for very large worlds (single player)
-- networking for multiplayer
-- 3D?
+Controls:
+- p: Pause the game
+- s: (for demo purposes) stop the player
+- hold f: "fast mode": your blob(s) travel at a faster speed, but shrink in size
+- hold a: "safe mode": your blob(s) shrink but cause other blobs to bounce off them
+    - these two modes can only be used if you are larger than the initial spawn radius!
+- space bar: "split": your blob(s) each binary-split on an axis orthogonal to the mouse.
+    - only blobs with large enough radii to split will be
+- 1: cheats: a window is printed on the screen showing the location and sizes of other NPCs, along with your location and current Biome.
+- r: reset to an entirely new world
+- shift+r (after game over): respawn in the same world
 
-Potential Issues:
-- "Spawnkilling" - respawning does not consider the locations of NPCs/hazards, albeit the probability that you spawn on top of one is quite low.
-- Mirrors - Buggy movement (keeps bouncing within itself) if an NPC spawns on top of it
-    - both are solved if spawns are handled with regards to hazard locations  intelligently -- naively that's a lot of intersection calculations.
-- merging is absolute unless another split is made. this can cause unwanted merging after pausing or reflecting
-    - merging sometimes doesn't happen unless you split again to reset the timer
+For Demo/Debug Purposes:
+- "k": all capable npcs split
+- hold ';': all capable npcs go into fast mode
+- hold 'l': all capable npcs go into safe mode
 
+To Toggle Game Settings:
+- see fields.js, update the fields that you want to (e.g. allow NPCs to extend), refresh the page
 
+For a more "complete" list of features (and description of demos), please see 'milestones.txt.' It is the document where I tracked my progress and set further goals as I went along.
 
+**RECREATING DEMOS**:
+I plan on presenting my features in the same order I created them, so the demos I use are earlier versions of this project. They are isolated in their own folders in the /test/ directory. As stated above, you can see the descriptions of all of their features in 'milestones.txt.' Features of the current implementation are inclusive of those above it, of course.
 
+You actually don't need a server to run most of them (all except test/test6-1 and src/):
 
+Simply copy and paste the absolute path to its .html in your web browser and it should work!
+
+Example of the path: /home/allen/projects/cs378h/agar-agar/test/test1/test1.html
+
+For test 6-1, same as src:
+
+With npm:
+    cd test/test6-1
+    npm install http-server -g
+    http-server -c-1
+
+With python (slower)
+    cd test/test6-1
+    python3 -m http.server
+
+With VSCode Live Server Extension:
+    open test/test6-1/index.html on VSCode
+    Click "Go Live" on the bottom
 
